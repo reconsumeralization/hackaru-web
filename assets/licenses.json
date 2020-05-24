@@ -23,6 +23,12 @@
         "licenseUrl": "https://github.com/getsentry/sentry-javascript/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
+    "apollo-boost": {
+        "licenses": "MIT",
+        "repository": "https://github.com/apollographql/apollo-client",
+        "licenseUrl": "https://github.com/apollographql/apollo-client/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
     "axios": {
         "licenses": "MIT",
         "repository": "https://github.com/axios/axios",
@@ -63,6 +69,12 @@
         "licenses": "MIT",
         "repository": "https://github.com/eligrey/FileSaver.js",
         "licenseUrl": "https://github.com/eligrey/FileSaver.js/raw/master/LICENSE.md",
+        "parents": "hackaru-web"
+    },
+    "graphql": {
+        "licenses": "MIT",
+        "repository": "https://github.com/graphql/graphql-js",
+        "licenseUrl": "https://github.com/graphql/graphql-js/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
     "hh-mm-ss": {
@@ -189,6 +201,12 @@
         "licenses": "ISC",
         "repository": "https://github.com/Akryum/vue-tooltip",
         "licenseUrl": "https://github.com/Akryum/vue-tooltip/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
+    "vue-apollo": {
+        "licenses": "MIT",
+        "repository": "https://github.com/Akryum/vue-apollo",
+        "licenseUrl": "https://github.com/Akryum/vue-apollo",
         "parents": "hackaru-web"
     },
     "vue-chartjs": {

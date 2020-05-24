@@ -95,6 +95,7 @@ module.exports = {
     { src: '~/plugins/sentry-client', ssr: false },
     { src: '~/plugins/load-script', ssr: false },
     { src: '~/plugins/vue-js-modal' },
+    { src: '~/plugins/vue-apollo' },
   ],
   /*
    ** Build configuration
