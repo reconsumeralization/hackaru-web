@@ -239,6 +239,7 @@ export default {
   max-width: calc(100vw - #{$side-bar-min-width});
   z-index: index($z, timer-form);
   height: 91px;
+  left: $side-bar-min-width;
 }
 .duration.stopped {
   color: $text-light;
@@ -360,6 +361,7 @@ export default {
 @include mq(small) {
   .timer-form {
     max-width: 100vw;
+    left: 0;
   }
   .form {
     height: auto;
@@ -393,6 +395,7 @@ export default {
   .form-content {
     order: 1;
     position: fixed;
+    left: 0;
     top: $side-bar-min-height;
     border-radius: 0;
     width: 100%;
