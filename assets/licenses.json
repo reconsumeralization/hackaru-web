@@ -23,10 +23,28 @@
         "licenseUrl": "https://github.com/getsentry/sentry-javascript/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
-    "apollo-boost": {
+    "apollo-cache-inmemory": {
         "licenses": "MIT",
         "repository": "https://github.com/apollographql/apollo-client",
         "licenseUrl": "https://github.com/apollographql/apollo-client/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
+    "apollo-client": {
+        "licenses": "MIT",
+        "repository": "https://github.com/apollographql/apollo-client",
+        "licenseUrl": "https://github.com/apollographql/apollo-client/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
+    "apollo-link-http": {
+        "licenses": "MIT",
+        "repository": "https://github.com/apollographql/apollo-link",
+        "licenseUrl": "https://github.com/apollographql/apollo-link/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
+    "apollo-link": {
+        "licenses": "MIT",
+        "repository": "https://github.com/apollographql/apollo-link",
+        "licenseUrl": "https://github.com/apollographql/apollo-link/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
     "axios": {
@@ -69,6 +87,12 @@
         "licenses": "MIT",
         "repository": "https://github.com/eligrey/FileSaver.js",
         "licenseUrl": "https://github.com/eligrey/FileSaver.js/raw/master/LICENSE.md",
+        "parents": "hackaru-web"
+    },
+    "graphql-tag": {
+        "licenses": "MIT",
+        "repository": "https://github.com/apollographql/graphql-tag",
+        "licenseUrl": "https://github.com/apollographql/graphql-tag/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
     "graphql": {
