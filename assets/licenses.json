@@ -77,6 +77,12 @@
         "licenseUrl": "https://github.com/Qix-/color/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
+    "cross-fetch": {
+        "licenses": "MIT",
+        "repository": "https://github.com/lquixada/cross-fetch",
+        "licenseUrl": "https://github.com/lquixada/cross-fetch/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
     "date-fns": {
         "licenses": "MIT",
         "repository": "https://github.com/date-fns/date-fns",
