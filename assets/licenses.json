@@ -35,6 +35,12 @@
         "licenseUrl": "https://github.com/apollographql/apollo-client/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
+    "apollo-link-context": {
+        "licenses": "MIT",
+        "repository": "https://github.com/apollographql/apollo-link",
+        "licenseUrl": "https://github.com/apollographql/apollo-link/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
     "apollo-link-http": {
         "licenses": "MIT",
         "repository": "https://github.com/apollographql/apollo-link",

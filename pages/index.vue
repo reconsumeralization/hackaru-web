@@ -28,6 +28,7 @@ import ActivityDayGroup from '@/components/organisms/activity-day-group';
 import Icon from '@/components/atoms/icon';
 import { startOfDay, endOfDay, addDays } from 'date-fns';
 import { mapGetters } from 'vuex';
+import gql from 'graphql-tag';
 
 const weekly = {
   start: startOfDay(addDays(new Date(), -7)),
@@ -35,6 +36,15 @@ const weekly = {
 };
 
 export default {
+  apollo: {
+    viewer: gql`
+      query {
+        viewer {
+          id
+        }
+      }
+    `,
+  },
   components: {
     TimerForm,
     ProjectName,
@@ -45,6 +55,7 @@ export default {
   data() {
     return {
       addDays,
+      viewer: '',
     };
   },
   head: {
