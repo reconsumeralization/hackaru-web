@@ -8,8 +8,7 @@
       {{ title }}<span>・{{ week }}</span>
     </h1>
     <activity-item
-      v-for="(activity, index) in activities"
-      :class="{ tutorial: first && index === 0 }"
+      v-for="activity in activities"
       :key="activity.id"
       v-bind="activity"
     />
@@ -18,17 +17,13 @@
 
 <script>
 import ActivityItem from '@/components/organisms/activity-item';
-import { differenceInDays, startOfDay, parseISO, format } from 'date-fns';
+import dayjs from 'dayjs';
 
 export default {
   components: {
     ActivityItem,
   },
   props: {
-    first: {
-      type: Boolean,
-      required: true,
-    },
     day: {
       type: String,
       required: true,
@@ -40,14 +35,14 @@ export default {
   },
   computed: {
     title() {
-      const diff = differenceInDays(startOfDay(new Date()), parseISO(this.day));
+      const diff = dayjs().diff(this.day, 'd');
       if (diff === 0) return this.$t('today');
       if (diff === 1) return this.$t('yesterday');
       if (diff < 0) return `${Math.abs(diff)}${this.$t('later')}`;
       if (diff > 0) return `${diff}${this.$t('ago')}`;
     },
     week() {
-      return this.$t(`weeks[${format(parseISO(this.day), 'i') - 1}]`);
+      return this.$t(`weeks[${dayjs(this.day).format('d')}]`);
     },
   },
 };

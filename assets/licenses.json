@@ -1,4 +1,10 @@
 {
+    "@nuxtjs/apollo": {
+        "licenses": "MIT",
+        "repository": "https://github.com/nuxt-community/apollo-module",
+        "licenseUrl": "https://github.com/nuxt-community/apollo-module/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
     "@nuxtjs/pwa": {
         "licenses": "MIT",
         "repository": "https://github.com/nuxt-community/pwa-module",
@@ -93,6 +99,12 @@
         "licenses": "MIT",
         "repository": "https://github.com/date-fns/date-fns",
         "licenseUrl": "https://github.com/date-fns/date-fns/raw/master/LICENSE.md",
+        "parents": "hackaru-web"
+    },
+    "dayjs": {
+        "licenses": "MIT",
+        "repository": "https://github.com/iamkun/dayjs",
+        "licenseUrl": "https://github.com/iamkun/dayjs/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
     "file-saver": {
@@ -231,6 +243,12 @@
         "licenses": "MIT",
         "repository": "https://github.com/webpack-contrib/style-loader",
         "licenseUrl": "https://github.com/webpack-contrib/style-loader/raw/master/LICENSE",
+        "parents": "hackaru-web"
+    },
+    "universal-cookie": {
+        "licenses": "MIT",
+        "repository": "https://github.com/reactivestack/cookies",
+        "licenseUrl": "https://github.com/reactivestack/cookies/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
     "v-tooltip": {

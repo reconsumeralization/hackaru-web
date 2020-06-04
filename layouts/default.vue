@@ -8,7 +8,7 @@
     />
     <side-bar />
     <login-guard class="content">
-      <nuxt keep-alive />
+      <nuxt />
       <toast />
       <client-only>
         <pwa-popover />

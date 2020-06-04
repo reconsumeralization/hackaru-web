@@ -4,16 +4,15 @@
   <section class="index">
     <timer-form class="timer-form" />
     <div class="content">
-      <p v-if="Object.keys(pastWeek).length <= 0" class="empty-message">
+      <p v-if="empty" class="empty-message">
         {{ $t('empty') }}
       </p>
       <activity-day-group
-        v-for="(activities, day, index) in pastWeek"
+        v-for="(activities, day) in pastWeek"
         v-else
         :key="day"
         :day="day"
         :activities="activities"
-        :first="index === 0"
         class="day"
       />
     </div>
@@ -22,55 +21,57 @@
 
 <script>
 import TimerForm from '@/components/organisms/timer-form';
-import ProjectName from '@/components/molecules/project-name';
-import BaseButton from '@/components/atoms/base-button';
 import ActivityDayGroup from '@/components/organisms/activity-day-group';
-import Icon from '@/components/atoms/icon';
-import { startOfDay, endOfDay, addDays } from 'date-fns';
-import { mapGetters } from 'vuex';
+import groupBy from 'lodash.groupby';
 import gql from 'graphql-tag';
+import dayjs from 'dayjs';
 
-const weekly = {
-  start: startOfDay(addDays(new Date(), -7)),
-  end: endOfDay(new Date()),
-};
-
-export default {
-  apollo: {
-    viewer: gql`
-      query {
-        viewer {
+const pastWeek = gql`
+  query($from: ISO8601DateTime!, $to: ISO8601DateTime!) {
+    viewer {
+      activities(from: $from, to: $to) {
+        id
+        description
+        startedAt
+        stoppedAt
+        project {
           id
+          name
+          color
         }
       }
-    `,
-  },
+    }
+  }
+`;
+
+export default {
   components: {
     TimerForm,
-    ProjectName,
-    Icon,
-    BaseButton,
     ActivityDayGroup,
   },
   data() {
     return {
-      addDays,
-      viewer: '',
+      pastWeek: {},
     };
+  },
+  async asyncData({ app }) {
+    const { data } = await app.apolloProvider.defaultClient.query({
+      query: pastWeek,
+      variables: {
+        from: dayjs().subtract(7, 'd'),
+        to: dayjs(),
+      },
+    });
+    const format = ({ startedAt }) => dayjs(startedAt).format('YYYY-MM-DD');
+    return { pastWeek: groupBy(data.viewer.activities, format) };
+  },
+  computed: {
+    empty() {
+      return Object.keys(this.pastWeek).length <= 0;
+    },
   },
   head: {
     title: 'Timer',
-  },
-  computed: {
-    ...mapGetters({
-      pastWeek: 'activities/pastWeek',
-    }),
-  },
-  activated() {
-    this.$store.dispatch('activities/fetchByRange', {
-      start: weekly.start,
-      end: weekly.end,
-    });
   },
 };
 </script>

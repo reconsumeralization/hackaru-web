@@ -95,7 +95,6 @@ module.exports = {
     { src: '~/plugins/sentry-client', ssr: false },
     { src: '~/plugins/load-script', ssr: false },
     { src: '~/plugins/vue-js-modal' },
-    { src: '~/plugins/vue-apollo' },
   ],
   /*
    ** Build configuration
@@ -134,6 +133,7 @@ module.exports = {
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
     '@nuxtjs/sentry',
+    '@nuxtjs/apollo',
     'vue-scrollto/nuxt',
     [
       'nuxt-i18n',
@@ -163,7 +163,9 @@ module.exports = {
       'nuxt-env',
       {
         keys: [
-          { key: 'HACKARU_API_URL' },
+          { key: 'HACKARU_API_URL' }, // deprecated
+          { key: 'HACKARU_SSR_API_URL' },
+          { key: 'HACKARU_SPA_API_URL' },
           { key: 'HACKARU_TOS_AND_PRIVACY_URL' },
           { key: 'GOOGLE_TAG_MANAGER_ID' },
           { key: 'SENTRY_DSN' },
@@ -183,6 +185,11 @@ module.exports = {
   },
   sentry: {
     disableClientSide: true,
+  },
+  apollo: {
+    clientConfigs: {
+      default: '~/apollo/client-config.js',
+    },
   },
   meta: {
     appleStatusBarStyle: 'black-translucent',
