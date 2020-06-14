@@ -22,27 +22,15 @@
 <script>
 import TimerForm from '@/components/organisms/timer-form';
 import ActivityDayGroup from '@/components/organisms/activity-day-group';
+import PastWeek from '~/graphql/queries/past-week.gql'
 import groupBy from 'lodash.groupby';
-import gql from 'graphql-tag';
 import dayjs from 'dayjs';
 
-const pastWeek = gql`
-  query($from: ISO8601DateTime!, $to: ISO8601DateTime!) {
-    viewer {
-      activities(from: $from, to: $to) {
-        id
-        description
-        startedAt
-        stoppedAt
-        project {
-          id
-          name
-          color
-        }
-      }
-    }
-  }
-`;
+function groupByStartedAt(activities) {
+  return groupBy(activities, ({ startedAt }) =>
+    dayjs(startedAt).format('YYYY-MM-DD')
+  );
+}
 
 export default {
   components: {
@@ -56,14 +44,17 @@ export default {
   },
   async asyncData({ app }) {
     const { data } = await app.apolloProvider.defaultClient.query({
-      query: pastWeek,
+      query: PastWeek,
       variables: {
         from: dayjs().subtract(7, 'd'),
         to: dayjs(),
       },
     });
-    const format = ({ startedAt }) => dayjs(startedAt).format('YYYY-MM-DD');
-    return { pastWeek: groupBy(data.viewer.activities, format) };
+    return {
+      pastWeek: groupByStartedAt(
+        data.viewer.activities
+      )
+    };
   },
   computed: {
     empty() {
