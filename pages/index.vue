@@ -2,7 +2,7 @@
 
 <template>
   <section class="index">
-    <timer-form class="timer-form" />
+    <timer-header :activity="workingActivity" />
     <div class="content">
       <p v-if="empty" class="empty-message">
         {{ $t('empty') }}
@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import TimerForm from '@/components/organisms/timer-form';
+import TimerHeader from '@/components/organisms/timer-header';
 import ActivityDayGroup from '@/components/organisms/activity-day-group';
-import PastWeek from '~/graphql/queries/past-week.gql'
+import PastWeek from '~/graphql/queries/past-week.gql';
 import groupBy from 'lodash.groupby';
 import dayjs from 'dayjs';
 
@@ -34,12 +34,13 @@ function groupByStartedAt(activities) {
 
 export default {
   components: {
-    TimerForm,
+    TimerHeader,
     ActivityDayGroup,
   },
   data() {
     return {
       pastWeek: {},
+      workingActivity: null
     };
   },
   async asyncData({ app }) {
@@ -51,9 +52,8 @@ export default {
       },
     });
     return {
-      pastWeek: groupByStartedAt(
-        data.viewer.activities
-      )
+      pastWeek: groupByStartedAt(data.viewer.activities),
+      workingActivity: data.viewer.workingActivity,
     };
   },
   computed: {

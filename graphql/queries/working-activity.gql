@@ -1,0 +1,15 @@
+query workingActivity {
+  viewer {
+    workingActivity {
+      id
+      description
+      startedAt
+      stoppedAt
+      project {
+        id
+        name
+        color
+      }
+    }
+  }
+}

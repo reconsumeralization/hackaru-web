@@ -1,0 +1,10 @@
+{
+  "en": {
+    "start": "Start timer",
+    "stop": "Stop timer"
+  },
+  "ja": {
+    "start": "計測を開始",
+    "stop": "計測を停止"
+  }
+}

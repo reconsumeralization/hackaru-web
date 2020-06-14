@@ -1,5 +1,5 @@
 <template>
-  <dot-text :color="color || '#cccfd9'" :text="name || 'No Project'" />
+  <dot-text :color="color" :text="name" />
 </template>
 
 <script>
@@ -12,11 +12,11 @@ export default {
   props: {
     name: {
       type: String,
-      default: null,
+      default: '未設定',
     },
     color: {
       type: String,
-      default: null,
+      default: '#cccfd9',
     },
   },
 };

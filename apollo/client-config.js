@@ -6,6 +6,7 @@ import { setContext } from 'apollo-link-context';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import Cookies from 'universal-cookie';
+import dayjs from 'dayjs';
 
 export default ({ app, req }) => {
   Vue.use(VueApollo);
@@ -19,7 +20,6 @@ export default ({ app, req }) => {
 
   async function createAccessToken({ email, password }) {
     if (process.server) return;
-    if (cookies.get('csrfToken')) return;
 
     const { data } = await axios.request({
       url: '/auth/access_token',
@@ -34,7 +34,10 @@ export default ({ app, req }) => {
         },
       },
     });
-    cookies.set('csrfToken', data.csrf_token);
+
+    cookies.set('csrfToken', data.csrf_token, {
+      expires: dayjs().add(1, 'y').toDate()
+    });
   }
 
   const authLink = setContext(async (_, context) => {
