@@ -36,7 +36,8 @@ export default ({ app, req }) => {
     });
 
     cookies.set('csrfToken', data.csrf_token, {
-      expires: dayjs().add(1, 'y').toDate()
+      expires: dayjs().add(1, 'y').toDate(),
+      path: '/',
     });
   }
 
