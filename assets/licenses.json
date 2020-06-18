@@ -257,12 +257,6 @@
         "licenseUrl": "https://github.com/Akryum/vue-tooltip/raw/master/LICENSE",
         "parents": "hackaru-web"
     },
-    "vue-apollo": {
-        "licenses": "MIT",
-        "repository": "https://github.com/Akryum/vue-apollo",
-        "licenseUrl": "https://github.com/Akryum/vue-apollo",
-        "parents": "hackaru-web"
-    },
     "vue-chartjs": {
         "licenses": "MIT",
         "repository": "https://github.com:apertureless/vue-chartjs",
