@@ -2,18 +2,90 @@
   <div class="suggestions-list">
     <section class="suggestions">
       <ul>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
-        <li><activity-name class="name" color="#f00" description="データベースを構築" /></li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
+        <li>
+          <activity-name
+            class="name"
+            color="#f00"
+            description="データベースを構築"
+          />
+        </li>
       </ul>
     </section>
   </div>
@@ -32,7 +104,6 @@ export default {
 <style scoped lang="scss">
 .suggestions-list {
   position: absolute;
-  animation-duration: 100ms;
   width: 100%;
   height: 100vh;
   top: 91px;
@@ -51,7 +122,7 @@ export default {
   background-color: $white;
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 415px;
+  max-height: 410px;
 }
 .suggestions ul {
   padding: 0;

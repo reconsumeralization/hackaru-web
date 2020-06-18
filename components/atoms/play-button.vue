@@ -33,9 +33,9 @@ export default {
   props: {
     working: {
       type: Boolean,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 
@@ -48,7 +48,6 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 40px;
   pointer-events: auto;
   border-radius: 50%;
   transition: opacity 0.3s, transform 0.1s;

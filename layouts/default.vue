@@ -7,13 +7,13 @@
       name="activity"
     />
     <side-bar />
-    <login-guard class="content">
+    <section class="content">
       <nuxt />
       <toast />
       <client-only>
         <pwa-popover />
       </client-only>
-    </login-guard>
+    </section>
   </div>
 </template>
 

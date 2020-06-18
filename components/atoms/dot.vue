@@ -7,7 +7,7 @@ export default {
   props: {
     color: {
       type: String,
-      required: true,
+      default: '#cccfd9',
     },
   },
 };
