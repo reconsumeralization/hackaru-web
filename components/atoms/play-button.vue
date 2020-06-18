@@ -6,7 +6,7 @@
       v-tooltip="$t('stop')"
       v-if="working"
       type="submit"
-      class="is-danger button stop"
+      class="is-danger is-circle button stop"
     >
       <icon name="square-icon" class="icon" />
     </base-button>
@@ -14,7 +14,7 @@
       v-tooltip="$t('start')"
       v-else
       type="submit"
-      class="is-primary button start"
+      class="is-primary is-circle button start"
     >
       <icon name="play-icon" class="icon" />
     </base-button>
@@ -44,9 +44,8 @@ export default {
   display: flex;
   align-self: center;
   flex-shrink: 0;
-  padding: 0;
-  width: 50px;
-  height: 50px;
+  min-width: 50px;
+  min-height: 50px;
   border-radius: 50%;
   pointer-events: auto;
   border-radius: 50%;

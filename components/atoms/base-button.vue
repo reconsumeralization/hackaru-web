@@ -26,8 +26,6 @@
   color: $white;
 }
 .base-button.is-circle {
-  width: 36px;
-  height: 36px;
   padding: 0;
   border-radius: 50%;
 }
