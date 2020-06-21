@@ -101,7 +101,6 @@ export default {
   width: 100%;
   height: 91px;
   display: flex;
-  border-radius: 5px;
   box-sizing: border-box;
   align-items: center;
   border-bottom: 1px $border-dark solid;
