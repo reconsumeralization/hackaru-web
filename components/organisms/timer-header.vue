@@ -34,6 +34,7 @@ import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
 import StopActivity from '~/graphql/queries/stop-activity';
 import PastWeekActivities from '~/graphql/queries/past-week-activities';
+import WorkingActivity from '~/graphql/queries/working-activity';
 import dayjs from 'dayjs';
 
 export default {
@@ -45,18 +46,13 @@ export default {
     SuggestionList,
     PlayButton,
   },
-  props: {
-    activity: {
-      type: Object,
-      default: undefined,
-    },
-  },
   data() {
     return {
       id: undefined,
       description: '',
       project: {},
       focused: false,
+      startedAt: undefined,
     };
   },
   computed: {
@@ -64,15 +60,19 @@ export default {
       return !!this.id;
     },
   },
-  watch: {
-    activity: {
-      immediate: true,
-      handler() {
-        if (this.activity) {
-          this.id = this.activity.id;
-          this.description = this.activity.description;
-          this.project = this.activity.project || {};
-          this.startedAt = this.activity.startedAt;
+  apollo: {
+    workingActivity: {
+      query: WorkingActivity,
+      manual: true,
+      result({ data }) {
+        const activity = data.viewer.workingActivity;
+        if (activity) {
+          this.id = activity.id;
+          this.description = activity.description;
+          this.project = activity.project || {};
+          this.startedAt = activity.startedAt;
+        } else {
+          this.clear();
         }
       },
     },
@@ -84,8 +84,18 @@ export default {
     blur() {
       this.focused = false;
     },
-    async stop() {
-      await this.$apollo.mutate({
+    clear() {
+      this.id = undefined;
+      this.description = '';
+      this.project = {};
+      this.startedAt = undefined;
+    },
+    start() {
+      console.log('START');
+    },
+    stop() {
+      this.clear();
+      this.$apollo.mutate({
         mutation: StopActivity,
         variables: {
           id: this.id,

@@ -39,8 +39,8 @@ export default {
     },
   },
   methods: {
-    play() {
-      this.$emit('play');
+    start() {
+      this.$emit('start');
     },
     stop() {
       this.$emit('stop');
