@@ -1,0 +1,18 @@
+mutation stopActivity($id: ID!, $stoppedAt: ISO8601DateTime!) {
+  updateActivity(input: {
+    id: $id,
+    stoppedAt: $stoppedAt
+  }) {
+    activity {
+      id
+      description
+      startedAt
+      stoppedAt
+      project {
+        id
+        name
+        color
+      }
+    }
+  }
+}

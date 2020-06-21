@@ -2,7 +2,7 @@
 
 <template>
   <section class="timer-header">
-    <form class="form" @submit.prevent="submit">
+    <form class="form">
       <div v-tooltip="$t('selectProject')" class="project-button">
         <project-name v-bind="project" class="project-name" />
         <dot :color="project.color" class="dot-only is-medium" />
@@ -19,7 +19,7 @@
         :started-at="startedAt"
         :class="['duration', { hide: focused }]"
       />
-      <play-button :working="working" class="play-button" />
+      <play-button :working="working" class="play-button" @stop="stop" />
     </form>
     <suggestion-list v-if="focused" />
   </section>
@@ -32,6 +32,9 @@ import ProjectName from '@/components/molecules/project-name';
 import SuggestionList from '@/components/organisms/suggestion-list';
 import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
+import StopActivity from '~/graphql/queries/stop-activity';
+import PastWeekActivities from '~/graphql/queries/past-week-activities';
+import dayjs from 'dayjs';
 
 export default {
   components: {
@@ -68,7 +71,7 @@ export default {
         if (this.activity) {
           this.id = this.activity.id;
           this.description = this.activity.description;
-          this.project = this.activity.project;
+          this.project = this.activity.project || {};
           this.startedAt = this.activity.startedAt;
         }
       },
@@ -80,6 +83,24 @@ export default {
     },
     blur() {
       this.focused = false;
+    },
+    async stop() {
+      await this.$apollo.mutate({
+        mutation: StopActivity,
+        variables: {
+          id: this.id,
+          stoppedAt: new Date().toISOString(),
+        },
+        refetchQueries: [
+          {
+            query: PastWeekActivities,
+            variables: {
+              from: dayjs().subtract(7, 'd'),
+              to: dayjs(),
+            },
+          },
+        ],
+      });
     },
   },
 };
@@ -105,6 +126,7 @@ export default {
   align-items: center;
   border-bottom: 1px $border-dark solid;
   box-shadow: 0 3px 3px $shadow;
+  background-color: $background-translucent;
   z-index: 1;
 }
 .project-button {

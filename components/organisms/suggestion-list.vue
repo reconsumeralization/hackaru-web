@@ -122,7 +122,7 @@ export default {
   background-color: $white;
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 395px;
+  max-height: 410px;
 }
 .suggestions ul {
   padding: 0;
@@ -143,6 +143,7 @@ export default {
   }
   &:last-child {
     border-bottom: 0;
+    padding-bottom: 10px;
   }
 }
 </style>

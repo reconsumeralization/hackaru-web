@@ -5,16 +5,18 @@
     <base-button
       v-tooltip="$t('stop')"
       v-if="working"
-      type="submit"
+      type="button"
       class="is-danger is-circle button stop"
+      @click="stop"
     >
       <icon name="square-icon" class="icon" />
     </base-button>
     <base-button
       v-tooltip="$t('start')"
       v-else
-      type="submit"
+      type="button"
       class="is-primary is-circle button start"
+      @click="start"
     >
       <icon name="play-icon" class="icon" />
     </base-button>
@@ -34,6 +36,14 @@ export default {
     working: {
       type: Boolean,
       required: true,
+    },
+  },
+  methods: {
+    play() {
+      this.$emit('play');
+    },
+    stop() {
+      this.$emit('stop');
     },
   },
 };

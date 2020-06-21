@@ -1,0 +1,15 @@
+query pastWeekActivities($from: ISO8601DateTime!, $to: ISO8601DateTime!) {
+  viewer {
+    activities(from: $from, to: $to) {
+      id
+      description
+      startedAt
+      stoppedAt
+      project {
+        id
+        name
+        color
+      }
+    }
+  }
+}

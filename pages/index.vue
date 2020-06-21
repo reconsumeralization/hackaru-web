@@ -9,7 +9,6 @@
       </p>
       <activity-day-group
         v-for="(activities, day) in pastWeek"
-        v-else
         :key="day"
         :day="day"
         :activities="activities"
@@ -22,7 +21,8 @@
 <script>
 import TimerHeader from '@/components/organisms/timer-header';
 import ActivityDayGroup from '@/components/organisms/activity-day-group';
-import PastWeek from '~/graphql/queries/past-week.gql';
+import PastWeekActivities from '~/graphql/queries/past-week-activities';
+import WorkingActivity from '~/graphql/queries/working-activity';
 import groupBy from 'lodash.groupby';
 import dayjs from 'dayjs';
 
@@ -37,23 +37,29 @@ export default {
     TimerHeader,
     ActivityDayGroup,
   },
-  data() {
-    return {
-      pastWeek: {},
-      workingActivity: null
-    };
-  },
-  async asyncData({ app }) {
-    const { data } = await app.apolloProvider.defaultClient.query({
-      query: PastWeek,
+  apollo: {
+    pastWeek: {
+      query: PastWeekActivities,
+      prefetch: false,
       variables: {
         from: dayjs().subtract(7, 'd'),
         to: dayjs(),
       },
-    });
+      update(data) {
+        return groupByStartedAt(data.viewer.activities);
+      },
+    },
+    workingActivity: {
+      query: WorkingActivity,
+      update(data) {
+        return data.viewer.workingActivity;
+      },
+    },
+  },
+  data() {
     return {
-      pastWeek: groupByStartedAt(data.viewer.activities),
-      workingActivity: data.viewer.workingActivity,
+      pastWeek: {},
+      workingActivity: null,
     };
   },
   computed: {
