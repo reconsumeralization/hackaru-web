@@ -33,9 +33,7 @@ import SuggestionList from '@/components/organisms/suggestion-list';
 import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
 import StopActivity from '~/graphql/queries/stop-activity';
-import PastWeekActivities from '~/graphql/queries/past-week-activities';
 import WorkingActivity from '~/graphql/queries/working-activity';
-import dayjs from 'dayjs';
 
 export default {
   components: {
@@ -72,7 +70,10 @@ export default {
           this.project = activity.project || {};
           this.startedAt = activity.startedAt;
         } else {
-          this.clear();
+          this.id = undefined;
+          this.description = '';
+          this.project = {};
+          this.startedAt = undefined;
         }
       },
     },
@@ -84,32 +85,24 @@ export default {
     blur() {
       this.focused = false;
     },
-    clear() {
-      this.id = undefined;
-      this.description = '';
-      this.project = {};
-      this.startedAt = undefined;
-    },
     start() {
       console.log('START');
     },
     stop() {
-      this.clear();
       this.$apollo.mutate({
         mutation: StopActivity,
         variables: {
           id: this.id,
           stoppedAt: new Date().toISOString(),
         },
-        refetchQueries: [
-          {
-            query: PastWeekActivities,
-            variables: {
-              from: dayjs().subtract(7, 'd'),
-              to: dayjs(),
-            },
-          },
-        ],
+        update(store) {
+          const data = store.readQuery({ query: WorkingActivity });
+          data.viewer.workingActivity = null;
+          store.writeQuery({
+            query: WorkingActivity,
+            data,
+          });
+        },
       });
     },
   },
