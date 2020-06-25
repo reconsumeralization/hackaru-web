@@ -34,6 +34,8 @@ import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
 import StopActivity from '~/graphql/queries/stop-activity';
 import WorkingActivity from '~/graphql/queries/working-activity';
+import StoppedActivities from '~/graphql/queries/stopped-activities';
+import dayjs from 'dayjs';
 
 export default {
   components: {
@@ -95,7 +97,14 @@ export default {
           id: this.id,
           stoppedAt: new Date().toISOString(),
         },
-        update(store) {
+        refetchQueries: [{
+          query: StoppedActivities,
+          variables: {
+            from: dayjs().subtract(7, 'd').format('YYYY-MM-DD'),
+            to: dayjs().add(1, 'd').format('YYYY-MM-DD'),
+          }
+        }],
+        update(store, a) {
           const data = store.readQuery({ query: WorkingActivity });
           data.viewer.workingActivity = null;
           store.writeQuery({
