@@ -3,7 +3,7 @@
 ></i18n>
 
 <template>
-  <section v-if="activities" class="activity-day-group">
+  <section class="activity-day-group">
     <h1>
       {{ title }}<span>・{{ week }}</span>
     </h1>

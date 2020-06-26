@@ -2,7 +2,7 @@
 
 <template>
   <section class="index">
-    <timer-header :activity="workingActivity" />
+    <timer-header />
     <div class="content">
       <p v-if="empty" class="empty-message">
         {{ $t('empty') }}
@@ -22,7 +22,6 @@
 import TimerHeader from '@/components/organisms/timer-header';
 import ActivityDayGroup from '@/components/organisms/activity-day-group';
 import StoppedActivities from '~/graphql/queries/stopped-activities';
-import WorkingActivity from '~/graphql/queries/working-activity';
 import groupBy from 'lodash.groupby';
 import dayjs from 'dayjs';
 
@@ -50,18 +49,11 @@ export default {
           data.viewer.stoppedActivities
         );
       },
-    },
-    workingActivity: {
-      query: WorkingActivity,
-      update(data) {
-        return data.viewer.workingActivity;
-      },
-    },
+    }
   },
   data() {
     return {
-      activities: {},
-      workingActivity: null,
+      activities: {}
     };
   },
   computed: {

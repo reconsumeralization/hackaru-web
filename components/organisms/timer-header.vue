@@ -95,16 +95,16 @@ export default {
         mutation: StopActivity,
         variables: {
           id: this.id,
-          stoppedAt: new Date().toISOString(),
+          stoppedAt: dayjs().toISOString(),
         },
         refetchQueries: [{
           query: StoppedActivities,
           variables: {
-            from: dayjs().subtract(7, 'd').format('YYYY-MM-DD'),
-            to: dayjs().add(1, 'd').format('YYYY-MM-DD'),
-          }
+            from: dayjs().startOf('d').subtract(7, 'd'),
+            to: dayjs().endOf('d'),
+          },
         }],
-        update(store, a) {
+        update(store) {
           const data = store.readQuery({ query: WorkingActivity });
           data.viewer.workingActivity = null;
           store.writeQuery({
