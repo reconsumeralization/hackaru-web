@@ -8,9 +8,10 @@
         {{ $t('empty') }}
       </p>
       <activity-day-group
-        v-for="(activities, day) in activities"
+        v-for="(activities, day, index) in activities"
         :key="day"
         :day="day"
+        :first="index === 0"
         :activities="activities"
         class="day"
       />

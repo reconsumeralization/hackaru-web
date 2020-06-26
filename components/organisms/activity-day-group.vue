@@ -8,7 +8,8 @@
       {{ title }}<span>・{{ week }}</span>
     </h1>
     <activity-item
-      v-for="activity in activities"
+      v-for="(activity, index) in activities"
+      :class="{ tutorial: first && index === 0 }"
       :key="activity.id"
       v-bind="activity"
     />
@@ -27,6 +28,10 @@ export default {
     day: {
       type: String,
       required: true,
+    },
+    first: {
+      type: Boolean,
+      required: true
     },
     activities: {
       type: Array,
