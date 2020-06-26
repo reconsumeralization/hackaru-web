@@ -11,7 +11,7 @@
         <icon name="trash-icon" />
       </div>
     </template>
-    <section class="activity" @click="showModal">
+    <section class="activity">
       <div class="content">
         <activity-name :project="project" :description="description" />
       </div>

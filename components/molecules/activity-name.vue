@@ -1,8 +1,7 @@
+<i18n src="@/assets/locales/components/molecules/activity-name.json"></i18n>
+
 <template>
-  <dot-text
-    :color="project ? project.color : '#cccfd9'"
-    :text="description || (project ? project.name : 'No Project')"
-  />
+  <dot-text :color="color" :text="text" />
 </template>
 
 <script>
@@ -22,5 +21,15 @@ export default {
       default: null,
     },
   },
+  computed: {
+    color() {
+      return (this.project || {}).color || '#cccfd9'
+    },
+    text() {
+      if (this.description) return this.description;
+      if (this.project) return this.project.name;
+      return this.$t('noProject')
+    }
+  }
 };
 </script>
