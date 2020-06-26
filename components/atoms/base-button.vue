@@ -16,6 +16,13 @@
   border-radius: 3px;
   background: none;
   border: 0;
+  transition: transform 0.1s ease;
+  &:hover {
+    opacity: 0.85;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
 }
 .base-button.is-primary {
   background-color: $cyan;

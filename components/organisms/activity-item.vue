@@ -4,7 +4,7 @@
   <swipe-menu
     ref="swipeMenu"
     @swipe-left="deleteActivity"
-    @swipe-right="duplicateActivity"
+    @swipe-right="repeatActivity"
   >
     <template slot="left">
       <div class="swipe-menu-item is-danger">
@@ -21,15 +21,15 @@
         class="duration"
       />
       <base-button
-        v-tooltip="$t('duplicate')"
-        class="duplicate-button"
-        @click.stop="duplicateActivity"
+        v-tooltip="$t('repeat')"
+        class="repeat-button"
+        @click.stop="repeatActivity"
       >
         <icon name="repeat-icon" class="is-midium" />
       </base-button>
     </section>
     <template slot="right">
-      <div class="swipe-menu-item is-duplicate">
+      <div class="swipe-menu-item is-repeat">
         <icon name="repeat-icon" />
       </div>
     </template>
@@ -103,7 +103,7 @@ export default {
         component: 'activity_item',
       });
     },
-    duplicateActivity() {
+    repeatActivity() {
       this.$refs.swipeMenu.reset();
       this.$apollo.mutate({
         mutation: StartActivity,
@@ -151,12 +151,12 @@ export default {
   padding-right: 20px;
   height: 100%;
 }
-.duplicate-button {
+.repeat-button {
   height: 100%;
   border-radius: 0;
   margin-left: 10px;
 }
-.is-duplicate {
+.is-repeat {
   background-color: $green;
   color: $white;
 }
@@ -166,7 +166,7 @@ export default {
     padding-left: 35px;
     height: 75px;
   }
-  .duplicate-button {
+  .repeat-button {
     display: none;
   }
 }

@@ -39,7 +39,6 @@ export default {
   apollo: {
     activities: {
       query: StoppedActivities,
-      prefetch: false,
       variables: {
         from: dayjs().startOf('d').subtract(7, 'd'),
         to: dayjs().endOf('d'),
