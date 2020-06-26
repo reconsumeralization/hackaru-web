@@ -32,7 +32,7 @@ import ProjectName from '@/components/molecules/project-name';
 import SuggestionList from '@/components/organisms/suggestion-list';
 import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
-import StopActivity from '@/graphql/queries/stop-activity';
+import StopActivity from '@/graphql/mutations/stop-activity';
 import WorkingActivity from '@/graphql/queries/working-activity';
 import { clearWorkingActivity } from '@/apollo/caches/working-activity';
 import StoppedActivities from '@/graphql/queries/stopped-activities';

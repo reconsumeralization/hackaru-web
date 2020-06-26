@@ -1,0 +1,19 @@
+mutation startActivity($projectId: Int, $description: String, $startedAt: ISO8601DateTime!) {
+  createActivity(input: {
+    startedAt: $startedAt
+    projectId: $projectId,
+    description: $description
+  }) {
+    activity {
+      id
+      description
+      startedAt
+      stoppedAt
+      project {
+        id
+        name
+        color
+      }
+    }
+  }
+}

@@ -42,6 +42,8 @@ import Icon from '@/components/atoms/icon';
 import ActivityName from '@/components/molecules/activity-name';
 import Ticker from '@/components/atoms/ticker';
 import SwipeMenu from '@/components/molecules/swipe-menu';
+import StartActivity from '~/graphql/mutations/start-activity';
+import { setWorkingActivity } from '@/apollo/caches/working-activity';
 
 export default {
   components: {
@@ -101,22 +103,22 @@ export default {
         component: 'activity_item',
       });
     },
-    async duplicateActivity() {
-      const success = await this.$store.dispatch('activities/add', {
-        description: this.description,
-        projectId: this.project && this.project.id,
-        startedAt: `${new Date()}`,
+    duplicateActivity() {
+      this.$refs.swipeMenu.reset();
+      this.$apollo.mutate({
+        mutation: StartActivity,
+        variables: {
+          description: this.description,
+          projectId: (this.project || {}).id,
+          startedAt: new Date().toISOString()
+        },
+        update(store, { data }) {
+          setWorkingActivity(
+            store,
+            data.createActivity.activity
+          );
+        },
       });
-      this.$gtm.trackEvent({
-        eventCategory: 'Activities',
-        eventAction: 'duplicate',
-        name: 'duplicate_activity',
-        component: 'activity_item',
-      });
-      if (success) {
-        this.$refs.swipeMenu.reset();
-        this.$store.dispatch('toast/success', this.$t('duplicated'));
-      }
     },
   },
 };

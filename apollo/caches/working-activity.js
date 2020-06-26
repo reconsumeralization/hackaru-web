@@ -14,3 +14,18 @@ export function clearWorkingActivity(store) {
     },
   });
 }
+
+export function setWorkingActivity(store, activity) {
+  const data = store.readQuery({
+    query: WorkingActivity
+  });
+  store.writeQuery({
+    query: WorkingActivity,
+    data: {
+      viewer: {
+        ...data.viewer,
+        workingActivity: activity,
+      }
+    },
+  });
+}
