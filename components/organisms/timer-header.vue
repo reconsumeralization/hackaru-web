@@ -32,9 +32,10 @@ import ProjectName from '@/components/molecules/project-name';
 import SuggestionList from '@/components/organisms/suggestion-list';
 import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
-import StopActivity from '~/graphql/queries/stop-activity';
-import WorkingActivity from '~/graphql/queries/working-activity';
-import StoppedActivities from '~/graphql/queries/stopped-activities';
+import StopActivity from '@/graphql/queries/stop-activity';
+import WorkingActivity from '@/graphql/queries/working-activity';
+import { clearWorkingActivity } from '@/apollo/caches/working-activity';
+import StoppedActivities from '@/graphql/queries/stopped-activities';
 import dayjs from 'dayjs';
 
 export default {
@@ -105,12 +106,7 @@ export default {
           },
         }],
         update(store) {
-          const data = store.readQuery({ query: WorkingActivity });
-          data.viewer.workingActivity = null;
-          store.writeQuery({
-            query: WorkingActivity,
-            data,
-          });
+          clearWorkingActivity(store);
         },
       });
     },
