@@ -8,7 +8,7 @@
         <dot :color="project.color" class="dot-only is-medium" />
       </div>
       <input
-        :value="description"
+        v-model="description"
         :placeholder="$t('description')"
         type="text"
         class="description"
@@ -19,7 +19,7 @@
         :started-at="startedAt"
         :class="['duration', { hide: focused }]"
       />
-      <play-button :working="working" class="play-button" @stop="stop" />
+      <play-button :working="working" class="play-button" @start="start" @stop="stop" />
     </form>
     <suggestion-list v-if="focused" />
   </section>
@@ -33,8 +33,9 @@ import SuggestionList from '@/components/organisms/suggestion-list';
 import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
 import StopActivity from '@/graphql/mutations/stop-activity';
+import StartActivity from '@/graphql/mutations/start-activity';
 import WorkingActivity from '@/graphql/queries/working-activity';
-import { clearWorkingActivity } from '@/apollo/caches/working-activity';
+import { setWorkingActivity, clearWorkingActivity } from '@/apollo/caches/working-activity';
 import StoppedActivities from '@/graphql/queries/stopped-activities';
 import dayjs from 'dayjs';
 
@@ -89,7 +90,20 @@ export default {
       this.focused = false;
     },
     start() {
-      console.log('START');
+      this.$apollo.mutate({
+        mutation: StartActivity,
+        variables: {
+          description: this.description,
+          projectId: (this.project || {}).id,
+          startedAt: new Date().toISOString()
+        },
+        update(store, { data }) {
+          setWorkingActivity(
+            store,
+            data.createActivity.activity
+          );
+        },
+      });
     },
     stop() {
       this.$apollo.mutate({
