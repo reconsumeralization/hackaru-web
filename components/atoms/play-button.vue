@@ -59,13 +59,6 @@ export default {
   border-radius: 50%;
   pointer-events: auto;
   border-radius: 50%;
-  transition: opacity 0.3s, transform 0.1s;
-  &:hover {
-    opacity: 0.9;
-  }
-  &:active {
-    transform: scale(0.95);
-  }
 }
 .icon {
   width: 22px;

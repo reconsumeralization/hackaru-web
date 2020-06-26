@@ -157,13 +157,9 @@ export default {
   justify-content: center;
   height: 100%;
   cursor: pointer;
-  transition: transform 0.1s ease;
   max-width: 200px;
   &:hover {
     opacity: 0.85;
-  }
-  &:active {
-    transform: scale(0.95);
   }
 }
 .dot-only {

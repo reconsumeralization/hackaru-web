@@ -140,7 +140,6 @@ export default {
 }
 .duration {
   font-family: $font-family-duration;
-  color: $text-light;
 }
 .content {
   align-items: center;

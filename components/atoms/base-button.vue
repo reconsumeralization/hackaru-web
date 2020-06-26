@@ -16,9 +16,9 @@
   border-radius: 3px;
   background: none;
   border: 0;
-  transition: transform 0.1s ease;
+  transition: opacity 0.3s, transform 0.1s;
   &:hover {
-    opacity: 0.85;
+    opacity: 0.9;
   }
   &:active {
     transform: scale(0.95);

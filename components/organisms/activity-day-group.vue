@@ -73,9 +73,6 @@ export default {
     h1 {
       margin-left: 30px;
     }
-    span {
-      display: none;
-    }
   }
 }
 </style>
