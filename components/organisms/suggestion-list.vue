@@ -118,11 +118,11 @@ export default {
   top: 0;
   left: 0;
   box-sizing: border-box;
-  box-shadow: 0 15px 6px $shadow-dark;
+  box-shadow: 0 3px 6px $shadow-darker;
   background-color: $white;
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 410px;
+  max-height: 415px;
 }
 .suggestions ul {
   padding: 0;

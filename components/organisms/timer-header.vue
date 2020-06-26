@@ -21,7 +21,9 @@
       />
       <play-button :working="working" class="play-button" @start="start" @stop="stop" />
     </form>
-    <suggestion-list v-if="focused" />
+    <transition name="fade">
+      <suggestion-list v-if="focused" />
+    </transition>
   </section>
 </template>
 
