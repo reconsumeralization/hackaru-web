@@ -42,8 +42,8 @@ export default {
       query: StoppedActivities,
       prefetch: false,
       variables: {
-        from: dayjs().subtract(7, 'd').format('YYYY-MM-DD'),
-        to: dayjs().add(1, 'd').format('YYYY-MM-DD'),
+        from: dayjs().startOf('d').subtract(7, 'd'),
+        to: dayjs().endOf('d'),
       },
       update(data) {
         return groupByStartedAt(
