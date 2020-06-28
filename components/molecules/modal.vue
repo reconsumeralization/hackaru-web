@@ -1,6 +1,6 @@
 <template>
-  <transition name="modal">
-    <div v-if="showed" class="modal" @click="hide">
+  <transition name="zoom-fade">
+    <div v-if="shown" class="modal" @click="hide">
       <div class="container" @click.stop>
         <slot />
       </div>
@@ -11,14 +11,14 @@
 <script>
 export default {
   props: {
-    showed: {
+    shown: {
       type: Boolean,
       required: true,
     },
   },
   methods: {
     hide() {
-      this.$emit('update:showed', false);
+      this.$emit('update:shown', false);
     },
   },
 };
@@ -44,16 +44,16 @@ export default {
   background-color: $white;
   box-shadow: 0 15px 15px $shadow-dark;
 }
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.1s;
+.zoom-fade-enter-active,
+.zoom-fade-leave-active {
+  transition: opacity 0.15s;
   .container {
-    transition: transform 0.1s;
+    transition: transform 0.15s;
     transform: scale(1, 1);
   }
 }
-.modal-enter,
-.modal-leave-to {
+.zoom-fade-enter,
+.zoom-fade-leave-to {
   opacity: 0;
   .container {
     transform: scale(0.95, 0.95);

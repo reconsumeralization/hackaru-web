@@ -26,9 +26,7 @@
         @stop="stop"
       />
     </form>
-    <transition name="fade">
-      <suggestion-list v-if="focused" />
-    </transition>
+    <suggestion-list :shown="focused" />
   </section>
 </template>
 

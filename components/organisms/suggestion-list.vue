@@ -1,94 +1,96 @@
 <template>
-  <div class="suggestions-list">
-    <section class="suggestions">
-      <ul>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-        <li>
-          <activity-name
-            class="name"
-            color="#f00"
-            description="データベースを構築"
-          />
-        </li>
-      </ul>
-    </section>
-  </div>
+  <transition name="slide-fade">
+    <div v-if="shown" class="suggestions-list">
+      <section class="suggestions">
+        <ul>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+          <li>
+            <activity-name
+              class="name"
+              color="#f00"
+              description="データベースを構築"
+            />
+          </li>
+        </ul>
+      </section>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -97,6 +99,12 @@ import ActivityName from '@/components/molecules/activity-name';
 export default {
   components: {
     ActivityName,
+  },
+  props: {
+    shown: {
+      type: Boolean,
+      required: true,
+    },
   },
 };
 </script>
@@ -118,11 +126,11 @@ export default {
   top: 0;
   left: 0;
   box-sizing: border-box;
-  box-shadow: 0 3px 6px $shadow-darker;
+  box-shadow: 0 10px 6px $shadow-dark;
   background-color: $white;
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 405px;
+  max-height: 395px;
 }
 .suggestions ul {
   padding: 0;
@@ -144,6 +152,22 @@ export default {
   &:last-child {
     border-bottom: 0;
     padding-bottom: 10px;
+  }
+}
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: opacity 0.15s;
+  opacity: 1;
+  .suggestions {
+    transition: transform 0.15s;
+    transform: translateY(0);
+  }
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+  .suggestions {
+    transform: translateY(-10px);
   }
 }
 </style>

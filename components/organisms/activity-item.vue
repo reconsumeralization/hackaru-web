@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <modal :showed.sync="showedModal">
+    <modal :shown.sync="shownModal">
       <activity-modal
         :activity="{
           project: project,
@@ -97,12 +97,12 @@ export default {
   },
   data() {
     return {
-      showedModal: false,
+      shownModal: false,
     };
   },
   methods: {
     showModal() {
-      this.showedModal = true;
+      this.shownModal = true;
     },
     deleteActivity() {
       if (!window.confirm(this.$t('confirms.delete'))) {
