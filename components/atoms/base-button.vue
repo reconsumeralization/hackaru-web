@@ -7,16 +7,17 @@
 <style scoped lang="scss">
 .base-button {
   cursor: pointer;
-  padding: 0 15px;
+  padding: 0 16px;
   height: 42px;
   justify-content: center;
   align-items: center;
   display: flex;
   line-height: 1;
-  border-radius: 3px;
+  border-radius: 4px;
   background: none;
   border: 0;
   transition: opacity 0.3s, transform 0.1s;
+  box-shadow: 0 5px 5px $shadow-dark;
   &:hover {
     opacity: 0.9;
   }
@@ -44,6 +45,11 @@
   border-radius: 99px;
   padding-right: 20px;
   padding-left: 20px;
+}
+.base-button.is-white {
+  border-radius: 3px;
+  border: 1px $border solid;
+  box-shadow: none;
 }
 .base-button.is-marshmallow {
   height: 43px;

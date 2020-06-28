@@ -1,39 +1,51 @@
 <i18n src="@/assets/locales/components/organisms/activity-item.json"></i18n>
 
 <template>
-  <swipe-menu
-    ref="swipeMenu"
-    @swipe-left="deleteActivity"
-    @swipe-right="repeatActivity"
-  >
-    <template slot="left">
-      <div class="swipe-menu-item is-danger">
-        <icon name="trash-icon" />
-      </div>
-    </template>
-    <section class="activity">
-      <div class="content">
-        <activity-name :project="project" :description="description" />
-      </div>
-      <ticker
-        :started-at="startedAt"
-        :stopped-at="stoppedAt"
-        class="duration"
+  <div>
+    <modal :showed.sync="showedModal">
+      <activity-modal
+        :activity="{
+          project: project,
+          description: description,
+          startedAt: startedAt,
+          stoppedAt: stoppedAt,
+        }"
       />
-      <base-button
-        v-tooltip="$t('repeat')"
-        class="repeat-button"
-        @click.stop="repeatActivity"
-      >
-        <icon name="repeat-icon" class="is-midium" />
-      </base-button>
-    </section>
-    <template slot="right">
-      <div class="swipe-menu-item is-repeat">
-        <icon name="repeat-icon" />
-      </div>
-    </template>
-  </swipe-menu>
+    </modal>
+    <swipe-menu
+      ref="swipeMenu"
+      @swipe-left="deleteActivity"
+      @swipe-right="repeatActivity"
+    >
+      <template slot="left">
+        <div class="swipe-menu-item is-danger">
+          <icon name="trash-icon" />
+        </div>
+      </template>
+      <section class="activity" @click="showModal">
+        <div class="content">
+          <activity-name :project="project" :description="description" />
+        </div>
+        <ticker
+          :started-at="startedAt"
+          :stopped-at="stoppedAt"
+          class="duration"
+        />
+        <base-button
+          v-tooltip="$t('repeat')"
+          class="repeat-button"
+          @click.stop="repeatActivity"
+        >
+          <icon name="repeat-icon" class="is-midium" />
+        </base-button>
+      </section>
+      <template slot="right">
+        <div class="swipe-menu-item is-repeat">
+          <icon name="repeat-icon" />
+        </div>
+      </template>
+    </swipe-menu>
+  </div>
 </template>
 
 <script>
@@ -44,9 +56,13 @@ import Ticker from '@/components/atoms/ticker';
 import SwipeMenu from '@/components/molecules/swipe-menu';
 import StartActivity from '~/graphql/mutations/start-activity';
 import { setWorkingActivity } from '@/apollo/caches/working-activity';
+import ActivityModal from '@/components/organisms/activity-modal';
+import Modal from '@/components/molecules/modal';
 
 export default {
   components: {
+    Modal,
+    ActivityModal,
     BaseButton,
     SwipeMenu,
     Icon,
@@ -72,36 +88,28 @@ export default {
     },
     stoppedAt: {
       type: String,
-      default: undefined,
+      required: true,
     },
     project: {
       type: Object,
       default: undefined,
     },
   },
+  data() {
+    return {
+      showedModal: false,
+    };
+  },
   methods: {
-    showModal(params) {
-      this.$modal.show('activity', {
-        id: this.id,
-        description: this.description,
-        startedAt: this.startedAt,
-        stoppedAt: this.stoppedAt,
-        project: this.project || undefined,
-      });
+    showModal() {
+      this.showedModal = true;
     },
     deleteActivity() {
       if (!window.confirm(this.$t('confirms.delete'))) {
         this.$refs.swipeMenu.reset();
         return;
       }
-      this.$store.dispatch('activities/delete', this.id);
-      this.$store.dispatch('toast/success', this.$t('deleted'));
-      this.$gtm.trackEvent({
-        eventCategory: 'Activities',
-        eventAction: 'delete',
-        name: 'delete_activity',
-        component: 'activity_item',
-      });
+      // TODO
     },
     repeatActivity() {
       this.$refs.swipeMenu.reset();
@@ -110,13 +118,10 @@ export default {
         variables: {
           description: this.description,
           projectId: (this.project || {}).id,
-          startedAt: new Date().toISOString()
+          startedAt: new Date().toISOString(),
         },
         update(store, { data }) {
-          setWorkingActivity(
-            store,
-            data.createActivity.activity
-          );
+          setWorkingActivity(store, data.createActivity.activity);
         },
       });
     },

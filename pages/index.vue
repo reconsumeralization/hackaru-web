@@ -40,20 +40,19 @@ export default {
   apollo: {
     activities: {
       query: StoppedActivities,
+      prefetch: false,
       variables: {
         from: dayjs().startOf('d').subtract(7, 'd'),
         to: dayjs().endOf('d'),
       },
       update(data) {
-        return groupByStartedAt(
-          data.viewer.stoppedActivities
-        );
+        return groupByStartedAt(data.viewer.stoppedActivities);
       },
-    }
+    },
   },
   data() {
     return {
-      activities: {}
+      activities: {},
     };
   },
   computed: {

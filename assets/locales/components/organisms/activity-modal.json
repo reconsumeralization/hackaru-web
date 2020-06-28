@@ -1,0 +1,17 @@
+{
+  "en": {
+    "editTimer": "Edit timer",
+    "project": "Project",
+    "startedAt": "Started at",
+    "stoppedAt": "Stopped at",
+    "description": "Enter your work description",
+    "update": "Update"
+  },
+  "ja": {
+    "editTimer": "計測を編集",
+    "startedAt": "開始時間",
+    "stoppedAt": "終了時間",
+    "description": "作業内容や補足を入力しましょう",
+    "update": "更新"
+  }
+}

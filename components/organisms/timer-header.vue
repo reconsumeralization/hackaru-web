@@ -19,7 +19,12 @@
         :started-at="startedAt"
         :class="['duration', { hide: focused }]"
       />
-      <play-button :working="working" class="play-button" @start="start" @stop="stop" />
+      <play-button
+        :working="working"
+        class="play-button"
+        @start="start"
+        @stop="stop"
+      />
     </form>
     <transition name="fade">
       <suggestion-list v-if="focused" />
@@ -29,22 +34,25 @@
 
 <script>
 import Dot from '@/components/atoms/dot';
-import NavModal from '@/components/organisms/nav-modal';
 import ProjectName from '@/components/molecules/project-name';
 import SuggestionList from '@/components/organisms/suggestion-list';
 import Ticker from '@/components/atoms/ticker';
 import PlayButton from '@/components/atoms/play-button';
+import ActivityModal from '@/components/organisms/activity-modal';
 import StopActivity from '@/graphql/mutations/stop-activity';
 import StartActivity from '@/graphql/mutations/start-activity';
 import WorkingActivity from '@/graphql/queries/working-activity';
-import { setWorkingActivity, clearWorkingActivity } from '@/apollo/caches/working-activity';
 import StoppedActivities from '@/graphql/queries/stopped-activities';
 import dayjs from 'dayjs';
+import {
+  setWorkingActivity,
+  clearWorkingActivity,
+} from '@/apollo/caches/working-activity';
 
 export default {
   components: {
     Dot,
-    NavModal,
+    ActivityModal,
     Ticker,
     ProjectName,
     SuggestionList,
@@ -97,13 +105,10 @@ export default {
         variables: {
           description: this.description,
           projectId: (this.project || {}).id,
-          startedAt: new Date().toISOString()
+          startedAt: new Date().toISOString(),
         },
         update(store, { data }) {
-          setWorkingActivity(
-            store,
-            data.createActivity.activity
-          );
+          setWorkingActivity(store, data.createActivity.activity);
         },
       });
     },
@@ -114,13 +119,15 @@ export default {
           id: this.id,
           stoppedAt: dayjs().toISOString(),
         },
-        refetchQueries: [{
-          query: StoppedActivities,
-          variables: {
-            from: dayjs().startOf('d').subtract(7, 'd'),
-            to: dayjs().endOf('d'),
+        refetchQueries: [
+          {
+            query: StoppedActivities,
+            variables: {
+              from: dayjs().startOf('d').subtract(7, 'd'),
+              to: dayjs().endOf('d'),
+            },
           },
-        }],
+        ],
         update(store) {
           clearWorkingActivity(store);
         },
