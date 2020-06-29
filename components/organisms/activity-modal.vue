@@ -1,12 +1,12 @@
 <i18n src="@/assets/locales/components/organisms/activity-modal.json"></i18n>
 
 <template>
-  <section>
-    <modal-header>
-      {{ $t('editTimer') }}
-    </modal-header>
-    <div class="content">
-      <form>
+  <modal :shown="shown" @hide="hide">
+    <form @submit.prevent="update">
+      <modal-header>
+        {{ $t('editTimer') }}
+      </modal-header>
+      <div class="content">
         <modal-item>
           <input
             v-model="description"
@@ -32,17 +32,17 @@
           </label>
           <datetime-picker v-model="stoppedAt" />
         </modal-item>
-      </form>
-    </div>
-    <modal-footer>
-      <base-button type="submit" class="is-primary">
-        {{ $t('update') }}
-      </base-button>
-      <base-button type="submit" class="is-white">
-        <icon name="trash-2-icon" class="is-danger" />
-      </base-button>
-    </modal-footer>
-  </section>
+      </div>
+      <modal-footer>
+        <base-button type="submit" class="is-primary">
+          {{ $t('update') }}
+        </base-button>
+        <base-button type="button" class="is-white">
+          <icon name="trash-2-icon" class="is-danger" />
+        </base-button>
+      </modal-footer>
+    </form>
+  </modal>
 </template>
 
 <script>
@@ -54,6 +54,7 @@ import DatetimePicker from '@/components/molecules/datetime-picker';
 import BaseButton from '@/components/atoms/base-button';
 import Icon from '@/components/atoms/icon';
 import ProjectName from '@/components/molecules/project-name';
+import UpdateActivity from '@/graphql/mutations/update-activity';
 
 export default {
   components: {
@@ -71,9 +72,14 @@ export default {
       type: Object,
       required: true,
     },
+    shown: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
+      id: undefined,
       project: {},
       description: '',
       startedAt: undefined,
@@ -84,11 +90,30 @@ export default {
     activity: {
       immediate: true,
       handler() {
+        this.id = this.activity.id;
         this.description = this.activity.description;
         this.project = this.activity.project || {};
         this.startedAt = this.activity.startedAt;
         this.stoppedAt = this.activity.stoppedAt;
       },
+    },
+  },
+  methods: {
+    async update() {
+      await this.$apollo.mutate({
+        mutation: UpdateActivity,
+        variables: {
+          id: this.id,
+          description: this.description,
+          projectId: (this.project || {}).id,
+          startedAt: this.startedAt,
+          stoppedAt: this.stoppedAt,
+        },
+      });
+      this.hide();
+    },
+    hide() {
+      this.$emit('update:shown', false);
     },
   },
 };

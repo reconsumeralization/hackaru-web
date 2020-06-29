@@ -2,16 +2,16 @@
 
 <template>
   <div>
-    <modal :shown.sync="shownModal">
-      <activity-modal
-        :activity="{
-          project: project,
-          description: description,
-          startedAt: startedAt,
-          stoppedAt: stoppedAt,
-        }"
-      />
-    </modal>
+    <activity-modal
+      :shown.sync="shownModal"
+      :activity="{
+        id,
+        project,
+        description,
+        startedAt,
+        stoppedAt,
+      }"
+    />
     <swipe-menu
       ref="swipeMenu"
       @swipe-left="deleteActivity"
@@ -57,11 +57,9 @@ import SwipeMenu from '@/components/molecules/swipe-menu';
 import StartActivity from '~/graphql/mutations/start-activity';
 import { setWorkingActivity } from '@/apollo/caches/working-activity';
 import ActivityModal from '@/components/organisms/activity-modal';
-import Modal from '@/components/molecules/modal';
 
 export default {
   components: {
-    Modal,
     ActivityModal,
     BaseButton,
     SwipeMenu,

@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     hide() {
-      this.$emit('update:shown', false);
+      this.$emit('hide');
     },
   },
 };
