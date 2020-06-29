@@ -2,7 +2,7 @@
 
 <template>
   <modal :shown="shown" @hide="hide">
-    <form @submit.prevent="update">
+    <form @submit.prevent="updateActivity">
       <modal-header>
         {{ $t('editTimer') }}
       </modal-header>
@@ -37,7 +37,7 @@
         <base-button type="submit" class="is-primary">
           {{ $t('update') }}
         </base-button>
-        <base-button type="button" class="is-white">
+        <base-button type="button" class="is-white" @click="deleteActivity">
           <icon name="trash-2-icon" class="is-danger" />
         </base-button>
       </modal-footer>
@@ -55,6 +55,7 @@ import BaseButton from '@/components/atoms/base-button';
 import Icon from '@/components/atoms/icon';
 import ProjectName from '@/components/molecules/project-name';
 import UpdateActivity from '@/graphql/mutations/update-activity';
+import DeleteActivity from '@/graphql/mutations/delete-activity';
 
 export default {
   components: {
@@ -99,7 +100,7 @@ export default {
     },
   },
   methods: {
-    async update() {
+    async updateActivity() {
       await this.$apollo.mutate({
         mutation: UpdateActivity,
         variables: {
@@ -111,6 +112,17 @@ export default {
         },
       });
       this.hide();
+    },
+    async deleteActivity() {
+      if (window.confirm(this.$t('confirmDelete'))) {
+        await this.$apollo.mutate({
+          mutation: DeleteActivity,
+          variables: {
+            id: this.id,
+          },
+        });
+        this.hide();
+      }
     },
     hide() {
       this.$emit('update:shown', false);

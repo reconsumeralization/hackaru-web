@@ -1,10 +1,8 @@
-mutation stopActivity(
-  $id: ID!,
-  $stoppedAt: ISO8601DateTime!
+mutation deleteActivity(
+  $id: ID!
 ) {
-  updateActivity(input: {
-    id: $id,
-    stoppedAt: $stoppedAt
+  deleteActivity(input: {
+    id: $id
   }) {
     activity {
       id

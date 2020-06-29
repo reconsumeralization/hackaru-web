@@ -57,6 +57,7 @@ import SwipeMenu from '@/components/molecules/swipe-menu';
 import StartActivity from '~/graphql/mutations/start-activity';
 import { setWorkingActivity } from '@/apollo/caches/working-activity';
 import ActivityModal from '@/components/organisms/activity-modal';
+import DeleteActivity from '@/graphql/mutations/delete-activity';
 
 export default {
   components: {
@@ -103,11 +104,16 @@ export default {
       this.shownModal = true;
     },
     deleteActivity() {
-      if (!window.confirm(this.$t('confirms.delete'))) {
+      if (window.confirm(this.$t('confirmDelete'))) {
+        this.$apollo.mutate({
+          mutation: DeleteActivity,
+          variables: {
+            id: this.id,
+          },
+        });
+      } else {
         this.$refs.swipeMenu.reset();
-        return;
       }
-      // TODO
     },
     repeatActivity() {
       this.$refs.swipeMenu.reset();
