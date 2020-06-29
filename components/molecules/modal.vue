@@ -1,7 +1,7 @@
 <template>
   <transition name="zoom-fade">
-    <div v-if="shown" class="modal" @click="hide">
-      <div class="container" @click.stop>
+    <div v-if="shown" class="modal" @mousedown="hide">
+      <div class="container" @mousedown.stop>
         <slot />
       </div>
     </div>
