@@ -15,7 +15,7 @@
         <activity-group-heading :day="day" />
         <activity-item
           v-for="activity in activities"
-          :class="{ tutorial: index === 0 && activities[0] == activity }"
+          :class="{ tutorial: index === 0 && activities[0] === activity }"
           :key="activity.id"
           v-bind="activity"
         />
@@ -26,7 +26,7 @@
 
 <script>
 import TimerHeader from '@/components/organisms/timer-header';
-import ActivityGroupHeading from '@/components/organisms/activity-group-heading';
+import ActivityGroupHeading from '@/components/molecules/activity-group-heading';
 import ActivityItem from '@/components/organisms/activity-item';
 import StoppedActivities from '~/graphql/queries/stopped-activities';
 import groupBy from 'lodash.groupby';
