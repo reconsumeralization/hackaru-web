@@ -1,5 +1,5 @@
 <template>
-  <transition name="zoom-fade">
+  <transition name="slide-down-fade">
     <div v-if="shown" class="modal" @mousedown="hide">
       <div class="container" @mousedown.stop>
         <slot />
@@ -44,19 +44,19 @@ export default {
   background-color: $white;
   box-shadow: 0 15px 15px $shadow-dark;
 }
-.zoom-fade-enter-active,
-.zoom-fade-leave-active {
+.slide-down-fade-enter-active,
+.slide-down-fade-leave-active {
   transition: opacity 0.15s;
   .container {
     transition: transform 0.15s;
-    transform: scale(1, 1);
+    transform: translateY(0);
   }
 }
-.zoom-fade-enter,
-.zoom-fade-leave-to {
+.slide-down-fade-enter,
+.slide-down-fade-leave-to {
   opacity: 0;
   .container {
-    transform: scale(0.95, 0.95);
+    transform: translateY(-10px);
   }
 }
 </style>
