@@ -7,21 +7,27 @@
       <p v-if="empty" class="empty-message">
         {{ $t('empty') }}
       </p>
-      <activity-day-group
+      <section
         v-for="(activities, day, index) in activities"
         :key="day"
-        :day="day"
-        :first="index === 0"
-        :activities="activities"
-        class="day"
-      />
+        class="activity-group"
+      >
+        <activity-group-heading :day="day" />
+        <activity-item
+          v-for="activity in activities"
+          :class="{ tutorial: index === 0 && activities[0] == activity }"
+          :key="activity.id"
+          v-bind="activity"
+        />
+      </section>
     </div>
   </section>
 </template>
 
 <script>
 import TimerHeader from '@/components/organisms/timer-header';
-import ActivityDayGroup from '@/components/organisms/activity-day-group';
+import ActivityGroupHeading from '@/components/organisms/activity-group-heading';
+import ActivityItem from '@/components/organisms/activity-item';
 import StoppedActivities from '~/graphql/queries/stopped-activities';
 import groupBy from 'lodash.groupby';
 import dayjs from 'dayjs';
@@ -35,7 +41,8 @@ function groupByStartedAt(activities) {
 export default {
   components: {
     TimerHeader,
-    ActivityDayGroup,
+    ActivityItem,
+    ActivityGroupHeading,
   },
   apollo: {
     activities: {
@@ -87,9 +94,20 @@ export default {
   text-align: center;
   color: $text-lighter;
 }
+.activity-group {
+  padding: 0 0;
+  margin: 50px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px $border solid;
+}
 @include mq(small) {
   .empty-message {
     height: calc(100vh - #{$side-bar-min-height});
+  }
+  .activity-group {
+    margin-top: 30px;
+    margin-bottom: 50px;
   }
 }
 </style>
