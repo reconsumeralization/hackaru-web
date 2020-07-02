@@ -1,35 +1,40 @@
 <template>
   <div class="toast">
     <transition enter-active-class="fadeInUp" leave-active-class="fadeOutDown">
-      <div v-if="opened" :class="['content', message.type]">
-        {{ message.text }}
+      <div v-if="opened" :class="['content', type]">
+        {{ message }}
       </div>
     </transition>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+const durations = {
+  error: 5000,
+  success: 3000,
+};
 
 export default {
   data() {
     return {
+      message: '',
+      type: '',
       opened: false,
       hideTimer: undefined,
     };
   },
-  computed: {
-    ...mapGetters({
-      message: 'toast/message',
-    }),
+  mounted() {
+    this.$nuxt.$on('toast', this.show);
   },
-  watch: {
-    message() {
+  methods: {
+    show({ message, type }) {
+      this.type = type;
+      this.message = message;
       this.opened = true;
       clearInterval(this.hideTimer);
       this.hideTimer = setTimeout(
         () => (this.opened = false),
-        this.message.duration
+        durations[this.type]
       );
     },
   },

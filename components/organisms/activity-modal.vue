@@ -112,6 +112,10 @@ export default {
         },
       });
       this.hide();
+      this.$nuxt.$emit('toast', {
+        type: 'success',
+        message: this.$t('updated'),
+      });
     },
     async deleteActivity() {
       if (window.confirm(this.$t('confirmDelete'))) {
@@ -122,6 +126,10 @@ export default {
           },
         });
         this.hide();
+        this.$nuxt.$emit('toast', {
+          type: 'success',
+          message: this.$t('deleted'),
+        });
       }
     },
     hide() {

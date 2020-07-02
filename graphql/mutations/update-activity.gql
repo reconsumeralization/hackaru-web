@@ -1,7 +1,7 @@
 mutation updateActivity(
   $id: ID!,
   $description: String!,
-  $projectId: ID!
+  $projectId: ID,
   $startedAt: ISO8601DateTime!,
   $stoppedAt: ISO8601DateTime!
 ) {

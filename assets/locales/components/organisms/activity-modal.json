@@ -6,7 +6,9 @@
     "stoppedAt": "Stopped at",
     "description": "Enter your work description",
     "update": "Update",
-    "confirmDelete": "Are you sure you want to delete timer?"
+    "confirmDelete": "Are you sure you want to delete timer?",
+    "updated": "Timer updated",
+    "deleted": "Timer deleted"
   },
   "ja": {
     "editTimer": "計測を編集",
@@ -14,6 +16,8 @@
     "stoppedAt": "終了時間",
     "description": "作業内容や補足を入力しましょう",
     "update": "更新",
-    "confirmDelete": "計測を削除しますか？"
+    "confirmDelete": "計測を削除しますか？",
+    "updated": "計測を更新しました",
+    "deleted": "計測を削除しました"
   }
 }

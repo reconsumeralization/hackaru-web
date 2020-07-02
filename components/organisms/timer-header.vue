@@ -97,8 +97,8 @@ export default {
     blur() {
       this.focused = false;
     },
-    start() {
-      this.$apollo.mutate({
+    async start() {
+      await this.$apollo.mutate({
         mutation: StartActivity,
         variables: {
           description: this.description,
@@ -109,9 +109,13 @@ export default {
           setWorkingActivity(store, data.createActivity.activity);
         },
       });
+      this.$nuxt.$emit('toast', {
+        type: 'success',
+        message: this.$t('started'),
+      });
     },
-    stop() {
-      this.$apollo.mutate({
+    async stop() {
+      await this.$apollo.mutate({
         mutation: StopActivity,
         variables: {
           id: this.id,
@@ -129,6 +133,10 @@ export default {
         update(store) {
           clearWorkingActivity(store);
         },
+      });
+      this.$nuxt.$emit('toast', {
+        type: 'success',
+        message: this.$t('stopped'),
       });
     },
   },

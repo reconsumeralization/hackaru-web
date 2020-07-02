@@ -1,5 +1,5 @@
 mutation startActivity(
-  $projectId: Int,
+  $projectId: ID,
   $description: String,
   $startedAt: ISO8601DateTime!
 ) {
