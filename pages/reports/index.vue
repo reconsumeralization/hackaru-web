@@ -14,47 +14,62 @@
       @left="slideLeft"
       @right="slideRight"
     />
-    <div class="tools">
-      <div class="exports">
-        <button data-test-id="pdf-button" @click="exportReport('pdf')">
-          PDF
-        </button>
-        <button data-test-id="csv-button" @click="exportReport('csv')">
-          CSV
-        </button>
-      </div>
+    <window-scroll class="tools" @scroll="scroll">
       <client-only>
-        <window-scroll @scroll="scroll">
-          <v-popover :open.sync="openPopover">
-            <button class="tooltip-target filter-button">
-              <icon
-                :class="['icon', { 'is-primary': projectIds.length }]"
-                name="filter-icon"
-              />
-            </button>
-            <template slot="popover">
-              <section class="popover-wrapper">
-                <label
-                  v-for="project in allProjects"
-                  :key="project.id"
-                  :for="`popover-wrapper-${project.id}`"
-                  class="project-item"
-                >
-                  <project-name v-bind="project" class="project-name" />
-                  <input
-                    :id="`popover-wrapper-${project.id}`"
-                    v-model="projectIds"
-                    :value="project.id"
-                    type="checkbox"
-                    class="checkbox"
-                  />
-                </label>
-              </section>
-            </template>
-          </v-popover>
-        </window-scroll>
+        <v-popover :open.sync="openExportPopover">
+          <button class="tooltip-target">
+            <icon class="icon" name="download-icon" />
+          </button>
+          <template slot="popover">
+            <section class="popover-wrapper">
+              <button
+                class="popover-item"
+                data-test-id="pdf-button"
+                @click="exportReport('pdf')"
+              >
+                <icon name="file-icon" />
+                PDF
+              </button>
+              <button
+                class="popover-item"
+                data-test-id="csv-button"
+                @click="exportReport('csv')"
+              >
+                <icon name="file-icon" />
+                CSV
+              </button>
+            </section>
+          </template>
+        </v-popover>
+        <v-popover :open.sync="openFilterPopover">
+          <button class="tooltip-target filter-button">
+            <icon
+              :class="['icon', { 'is-primary': projectIds.length }]"
+              name="filter-icon"
+            />
+          </button>
+          <template slot="popover">
+            <section class="popover-wrapper">
+              <label
+                v-for="project in allProjects"
+                :key="project.id"
+                :for="`popover-wrapper-${project.id}`"
+                class="popover-item"
+              >
+                <project-name v-bind="project" class="project-name" />
+                <input
+                  :id="`popover-wrapper-${project.id}`"
+                  v-model="projectIds"
+                  :value="project.id"
+                  type="checkbox"
+                  class="checkbox"
+                />
+              </label>
+            </section>
+          </template>
+        </v-popover>
       </client-only>
-    </div>
+    </window-scroll>
 
     <coach-tooltip :content="$t('moveToNextPage')" name="swipeReport">
       <loop-slider
@@ -183,7 +198,8 @@ export default {
       currentPeriod: 'day',
       selectedIndex: 0,
       projectIds: [],
-      openPopover: false,
+      openExportPopover: false,
+      openFilterPopover: false,
     };
   },
   computed: {
@@ -263,7 +279,8 @@ export default {
       window.open(`${this.localePath('reports')}/${type}/?${query}`);
     },
     scroll() {
-      this.openPopover = false;
+      this.openFilterPopover = false;
+      this.openExportPopover = false;
     },
   },
 };
@@ -286,9 +303,8 @@ export default {
 }
 .tools {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 40px;
-  height: 50px;
   box-sizing: border-box;
   border-bottom: 1px $border-dark solid;
   background-color: $background-translucent;
@@ -297,8 +313,8 @@ export default {
     display: flex;
     background: none;
     color: $text;
-    padding: 0 20px;
-    height: 50px;
+    padding: 0 18px;
+    height: 48px;
     border: 0;
     border: 1px $border-dark solid;
     border-top: 0;
@@ -306,20 +322,30 @@ export default {
     align-items: center;
     cursor: pointer;
   }
+  .filter-button {
+    border-left: 0;
+  }
 }
 .popover-wrapper {
   padding: 10px;
   max-height: 270px;
   overflow: scroll;
 }
-.project-item {
+.popover-item {
   display: flex;
   padding: 0 15px;
+  padding-left: 10px;
   height: 45px;
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
+  border: 0;
+  background: none;
   transition: background-color 0.15s;
+  cursor: pointer;
+  .icon {
+    margin-right: 10px;
+  }
   &:hover {
     background-color: $background-hover;
   }
@@ -342,7 +368,7 @@ export default {
     padding: 0;
   }
   .filter-button {
-    margin-right: 30px;
+    margin-right: 25px;
     border-right: 1px $border-dark solid;
   }
 }
