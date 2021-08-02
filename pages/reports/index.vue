@@ -2,7 +2,7 @@
 
 <template>
   <section>
-    <delighted />
+    <survey-hint />
     <date-header
       ref="header"
       :periods="['day', 'week', 'month', 'year']"
@@ -118,7 +118,7 @@ import LoopSlider from '~/components/organisms/loop-slider';
 import DateHeader from '~/components/organisms/date-header';
 import ContentHeader from '~/components/organisms/content-header';
 import ReportContent from '~/components/organisms/report-content';
-import Delighted from '~/components/molecules/delighted';
+import SurveyHint from '~/components/organisms/survey-hint';
 import { mapGetters } from 'vuex';
 import { stringify } from 'query-string';
 import {
@@ -164,7 +164,7 @@ const periods = {
 
 export default {
   components: {
-    Delighted,
+    SurveyHint,
     Icon,
     CoachTooltip,
     LoopSlider,
@@ -212,10 +212,21 @@ export default {
   },
   watch: {
     projectIds: {
-      handler: 'fetchReport',
+      handler() {
+        this.$mixpanel.track('Filter project ids', {
+          component: 'report',
+        });
+        this.fetchReport();
+      },
     },
     period: {
-      handler: 'fetchReport',
+      handler() {
+        this.$mixpanel.track('Select period', {
+          component: 'report',
+          period: this.currentPeriod,
+        });
+        this.fetchReport();
+      },
     },
     date: {
       handler: 'fetchReport',
@@ -246,15 +257,28 @@ export default {
       this.$refs.slider.slideRight();
     },
     today() {
+      this.$mixpanel.track('Show today report', {
+        component: 'report',
+      });
       this.date = new Date();
     },
     prev() {
+      this.$mixpanel.track('Show prev report', {
+        component: 'report',
+      });
       this.date = this.period.add(this.period.startOf(this.date), -1);
     },
     next() {
+      this.$mixpanel.track('Show next report', {
+        component: 'report',
+      });
       this.date = this.period.add(this.period.startOf(this.date), 1);
     },
     exportReport(type) {
+      this.$mixpanel.track('Export report', {
+        component: 'report',
+        type,
+      });
       const query = stringify({
         start: formatISO(this.period.startOf(this.date)),
         end: formatISO(this.period.endOf(this.date)),
@@ -304,7 +328,6 @@ export default {
     border-top: 0;
     border-bottom: 0;
     align-items: center;
-    cursor: pointer;
   }
 }
 .popover-wrapper {

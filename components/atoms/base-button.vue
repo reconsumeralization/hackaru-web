@@ -6,7 +6,6 @@
 
 <style scoped lang="scss">
 .base-button {
-  cursor: pointer;
   padding: 0 15px;
   height: 42px;
   justify-content: center;
@@ -23,6 +22,10 @@
 }
 .base-button.is-danger {
   background-color: $red;
+  color: $white;
+}
+.base-button.is-dark {
+  background-color: $grey-333;
   color: $white;
 }
 .base-button.is-circle {

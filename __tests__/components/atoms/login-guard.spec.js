@@ -13,6 +13,8 @@ describe('LoginGuard', () => {
   const $cookies = { set: jest.fn() };
   const $ga = { set: jest.fn() };
   const scope = { setUser: jest.fn() };
+  const $logrocket = { identify: jest.fn() };
+  const $mixpanel = { reset: jest.fn(), identify: jest.fn() };
 
   delete window.location;
   window.location = { assign: jest.fn() };
@@ -24,6 +26,8 @@ describe('LoginGuard', () => {
         $router,
         $cookies,
         $ga,
+        $logrocket,
+        $mixpanel,
         $route: { fullPath: '/secure' },
         $sentry: {
           configureScope: (fn) => fn(scope),
@@ -42,6 +46,10 @@ describe('LoginGuard', () => {
 
     it('redirects to login page', () => {
       expect(window.location.assign).toHaveBeenCalledWith('/en/auth');
+    });
+
+    it('resets mixpanel properties', () => {
+      expect($mixpanel.reset).toHaveBeenCalled();
     });
 
     it('stores current path', () => {
@@ -66,6 +74,14 @@ describe('LoginGuard', () => {
 
     it('saves userId to google analytics', () => {
       expect($ga.set).toHaveBeenCalledWith('userId', 1);
+    });
+
+    it('saves userId to logrocket', () => {
+      expect($logrocket.identify).toHaveBeenCalledWith(1);
+    });
+
+    it('saves userId to mixpanel', () => {
+      expect($mixpanel.identify).toHaveBeenCalledWith(1);
     });
   });
 });

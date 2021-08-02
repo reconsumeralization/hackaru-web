@@ -110,7 +110,7 @@ module.exports = {
       ]),
     ],
   },
-  css: [{ src: 'normalize.css' }, { src: '~/assets/scss/main.scss' }],
+  css: ['ress', { src: '~/assets/scss/main.scss' }],
   /*
    ** Customize the progress bar color
    */
@@ -130,15 +130,14 @@ module.exports = {
     { src: '~/plugins/sentry-client', ssr: false },
     { src: '~/plugins/load-script', ssr: false },
     { src: '~/plugins/v-scroll-lock', ssr: false },
+    { src: '~/plugins/mixpanel', ssr: false },
     { src: '~/plugins/api' },
+    { src: '~/plugins/logrocket' },
   ],
   /*
    ** Build configuration
    */
   build: {
-    /*
-     ** Run ESLint on save
-     */
     extend(config) {
       if (process.server && process.browser) {
         config.module.rules.push({
@@ -200,7 +199,10 @@ module.exports = {
     sentryDsn: process.env.SENTRY_DSN,
     sentryProject: process.env.SENTRY_PROJECT,
     sentryRelease: process.env.SENTRY_RELEASE,
+    mixpanelProjectToken: process.env.MIXPANEL_PROJECT_TOKEN,
     delightedToken: process.env.DELIGHTED_TOKEN,
+    logRocketId: process.env.LOGROCKET_ID,
+    logRocketRelease: process.env.LOGROCKET_RELEASE,
     axios: {
       browserBaseURL: process.env.HACKARU_API_URL,
     },
@@ -267,6 +269,10 @@ module.exports = {
           'https://web.delighted.com',
           'https://translate.googleapis.com',
           'wss://ws.pusherapp.com/app/7fa7ab308aa09e4f2ae1',
+          'https://*.logrocket.io',
+          'https://*.lr-ingest.io',
+          'https://*.logrocket.com',
+          'https://api-js.mixpanel.com',
         ],
         'script-src': [
           'https://d2yyd1h5u9mauk.cloudfront.net',
@@ -274,6 +280,8 @@ module.exports = {
           'https://www.google-analytics.com',
           'https://translate.google.com',
           "'unsafe-inline'",
+          'https://cdn.logrocket.io',
+          'https://cdn.lr-ingest.io',
           "'self'",
         ],
         'style-src': [
@@ -290,6 +298,8 @@ module.exports = {
           'data:',
           "'self'",
         ],
+        'child-src': ['blob:', "'self'"],
+        'worker-src': ['blob:', "'self'"],
         'font-src': ['https://fonts.gstatic.com'],
         'default-src': ["'self'"],
         'frame-src': ["'none'"],

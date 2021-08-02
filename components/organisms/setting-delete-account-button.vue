@@ -11,7 +11,7 @@
         </modal-header>
         <modal-item>
           <icon name="alert-triangle-icon" class="icon alert-icon" />
-          {{ $t('modal.warning') }}
+          <p class="warning-message">{{ $t('modal.warning') }}</p>
         </modal-item>
         <modal-item>
           <input
@@ -83,6 +83,7 @@ export default {
         currentPassword: this.currentPassword,
       });
       if (success) {
+        this.$mixpanel.reset();
         this.$ga.event({
           eventCategory: 'Accounts',
           eventAction: 'delete',
@@ -97,5 +98,8 @@ export default {
 .alert-icon {
   flex-shrink: 0;
   margin-right: 15px;
+}
+.warning-message {
+  margin: 15px 0;
 }
 </style>

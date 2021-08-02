@@ -39,7 +39,7 @@
           </base-button>
           <base-button
             type="button"
-            class="is-rounded deny-button"
+            class="is-rounded is-dark"
             data-test-id="deny-button"
             @click="decide('deny')"
           >
@@ -105,6 +105,10 @@ export default {
   },
   methods: {
     decide(action) {
+      this.$mixpanel.track('Decide oauth authorization', {
+        component: 'authorize',
+        action,
+      });
       this.$ga.event({
         eventCategory: 'OAuth',
         eventAction: action,
@@ -144,10 +148,6 @@ ul {
 .allow-button {
   width: 100px;
   margin-right: 10px;
-}
-.deny-button {
-  background: $background-dark;
-  color: $white;
 }
 .footer {
   display: flex;
